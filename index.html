@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Muhammad Haris O — Software Developer / 3D &amp; SaaS Modeling</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B0F19;
+    --bg-raised: #10151F;
+    --bg-panel: #0E1320;
+    --line: rgba(148,163,184,0.14);
+    --line-strong: rgba(148,163,184,0.28);
+    --ink: #E7ECF5;
+    --ink-dim: #8B94A7;
+    --ink-faint: #545E72;
+    --cyan: #06B6D4;
+    --indigo: #6366F1;
+    --amber: #F5A623;
+    --ok: #34D399;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top: env(safe-area-inset-top, 0px);}
+  html,body{
+    margin:0; padding:0; background:var(--bg); color:var(--ink);
+    font-family:'Space Grotesk', 'Segoe UI', Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    width:100%;
+  }
+  ::selection{ background:var(--indigo); color:#fff; }
+
+  .mono{ font-family:'JetBrains Mono','SFMono-Regular',Consolas,monospace; }
+
+  a{ color:inherit; }
+
+  /* ---------- layout shell ---------- */
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  @media (max-width:720px){ .wrap{ padding:0 20px; } }
+
+  section{ position:relative; padding:120px 0; }
+  @media (max-width:720px){ section{ padding:76px 0; } }
+
+  .rule{ height:1px; width:100%; background:var(--line); }
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    padding-top: env(safe-area-inset-top, 0px);
+    background:rgba(11,15,25,0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  @media (max-width:720px){ .nav-inner{ padding:14px 20px; } }
+  .nav-id{
+    display:flex; align-items:center; gap:10px;
+    font-size:14px; letter-spacing:0.01em;
+  }
+  .nav-id .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--ok);
+    box-shadow:0 0 8px var(--ok);
+    animation: blink 2.4s ease-in-out infinite;
+  }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+  .nav-links{ display:flex; gap:28px; font-size:13.5px; color:var(--ink-dim); }
+  .nav-links a{ text-decoration:none; transition:color .2s ease; }
+  .nav-links a:hover{ color:var(--cyan); }
+  @media (max-width:720px){ .nav-links{ display:none; } }
+
+  /* ---------- hero ---------- */
+  #hero{
+    padding-top: calc(160px + env(safe-area-inset-top, 0px));
+    padding-bottom:100px;
+    min-height: 92vh;
+    display:flex; align-items:center;
+  }
+  #hero-canvas-wrap{
+    position:absolute; inset:0; z-index:0;
+    overflow:hidden;
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+  #hero-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+  #hero-fallback{
+    position:absolute; inset:0; z-index:0; display:none;
+    background:
+      radial-gradient(ellipse 60% 50% at 78% 30%, rgba(99,102,241,0.22), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 85% 55%, rgba(6,182,212,0.16), transparent 60%);
+  }
+  .hero-inner{ position:relative; z-index:2; width:100%; }
+  .hero-kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12.5px; color:var(--cyan);
+    padding:6px 12px; border:1px solid rgba(6,182,212,0.35);
+    border-radius:4px; background:rgba(6,182,212,0.06);
+    margin-bottom:28px;
+  }
+  h1.hero-name{
+    font-size:clamp(40px, 7vw, 82px);
+    line-height:1.02;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin:0 0 18px 0;
+    max-width:14ch;
+    background:linear-gradient(100deg, #F5F8FF 20%, #A5B4FC 55%, #22D3EE 85%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-role{
+    font-size:clamp(16px, 2.1vw, 21px);
+    color:var(--ink-dim);
+    margin:0 0 30px 0;
+    max-width:46ch;
+  }
+  .hero-role .mono{ color:var(--ink); }
+  .hero-desc{
+    font-size:15.5px; line-height:1.7; color:var(--ink-dim);
+    max-width:52ch; margin:0 0 40px 0;
+  }
+  .hero-cta{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:13px 22px; font-size:14px; font-weight:600;
+    border-radius:6px; cursor:pointer; text-decoration:none;
+    border:1px solid transparent;
+    transition: transform .15s ease, border-color .2s ease, background .2s ease;
+    font-family:'Space Grotesk', sans-serif;
+  }
+  .btn:active{ transform: scale(0.98); }
+  .btn-primary{
+    background:linear-gradient(120deg, var(--indigo), var(--cyan));
+    color:#060810;
+  }
+  .btn-primary:hover{ filter:brightness(1.08); }
+  .btn-ghost{
+    border:1px solid var(--line-strong); color:var(--ink);
+    background:rgba(255,255,255,0.02);
+  }
+  .btn-ghost:hover{ border-color:var(--cyan); color:var(--cyan); }
+
+  .hero-stats{
+    display:flex; gap:40px; margin-top:64px; flex-wrap:wrap;
+  }
+  .hero-stat b{ display:block; font-size:26px; font-weight:700; }
+  .hero-stat span{ font-size:12.5px; color:var(--ink-faint); }
+
+  /* ---------- section heads ---------- */
+  .sec-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:56px; flex-wrap:wrap;
+  }
+  .sec-head .path{
+    font-size:12.5px; color:var(--ink-faint); margin-bottom:10px;
+  }
+  .sec-head h2{
+    font-size:clamp(26px,3.4vw,38px); margin:0; font-weight:600; letter-spacing:-0.01em;
+  }
+  .sec-head p{ max-width:36ch; color:var(--ink-dim); font-size:14.5px; line-height:1.6; margin:0; }
+
+  /* ---------- capabilities ---------- */
+  .cap-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  @media (max-width:860px){ .cap-grid{ grid-template-columns:1fr; } }
+  .cap-card{
+    background:var(--bg-panel); padding:34px 30px 30px;
+    position:relative; overflow:hidden;
+  }
+  .cap-card .idx{ font-size:12px; color:var(--ink-faint); margin-bottom:22px; display:block; }
+  .cap-card h3{ font-size:19px; margin:0 0 12px 0; font-weight:600; }
+  .cap-card p{ font-size:14px; line-height:1.65; color:var(--ink-dim); margin:0 0 20px 0; }
+  .cap-card .tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .cap-card .tags span{
+    font-size:11.5px; padding:4px 9px; border:1px solid var(--line-strong);
+    border-radius:4px; color:var(--ink-dim);
+  }
+  .cap-glow{
+    position:absolute; width:220px; height:220px; border-radius:50%;
+    top:-90px; right:-90px; filter:blur(50px); opacity:0.16;
+    background:var(--cyan); pointer-events:none;
+  }
+
+  /* ---------- projects ---------- */
+  .proj-list{ display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .proj-card{
+    background:var(--bg-panel);
+    display:grid; grid-template-columns:120px 1fr auto; gap:26px; align-items:center;
+    padding:28px 30px; cursor:default;
+    position:relative;
+    perspective:1000px;
+    transition: background .25s ease;
+  }
+  @media (max-width:720px){ .proj-card{ grid-template-columns:1fr; gap:14px; padding:24px 20px; } }
+  .proj-card:hover{ background:#121826; }
+  .proj-id{ font-size:12.5px; color:var(--ink-faint); }
+  .proj-main h3{
+    margin:0 0 8px 0; font-size:19px; font-weight:600;
+    transition: transform .2s ease, letter-spacing .2s ease;
+  }
+  .proj-card:hover h3{ letter-spacing: 0.005em; }
+  .proj-main p{ margin:0 0 12px 0; font-size:13.8px; color:var(--ink-dim); line-height:1.6; max-width:60ch; }
+  .proj-main .stack{ display:flex; gap:8px; flex-wrap:wrap; }
+  .proj-main .stack span{ font-size:11px; color:var(--cyan); }
+  .proj-main .stack span::after{ content:'·'; margin-left:8px; color:var(--ink-faint); }
+  .proj-main .stack span:last-child::after{ content:''; }
+  .proj-status{
+    font-size:11.5px; padding:5px 10px; border-radius:4px; white-space:nowrap;
+    border:1px solid rgba(52,211,153,0.35); color:var(--ok); background:rgba(52,211,153,0.06);
+    justify-self:end;
+  }
+  @media (max-width:720px){ .proj-status{ justify-self:start; } }
+  .proj-glitch{ position:relative; }
+  .proj-glitch.glitching h3{ animation: glitch 0.28s steps(2,end) 2; }
+  @keyframes glitch{
+    0%{ transform:translate(0,0); text-shadow:none; }
+    30%{ transform:translate(-1.5px,0.5px); text-shadow:1.5px 0 var(--cyan), -1.5px 0 var(--indigo); }
+    60%{ transform:translate(1.5px,-0.5px); text-shadow:-1.5px 0 var(--cyan), 1.5px 0 var(--indigo); }
+    100%{ transform:translate(0,0); text-shadow:none; }
+  }
+
+  /* ---------- terminal ---------- */
+  .term{
+    background:#080B12; border:1px solid var(--line-strong); border-radius:8px;
+    overflow:hidden; box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:8px; padding:12px 16px;
+    border-bottom:1px solid var(--line); background:#0C1018;
+  }
+  .term-bar i{ width:10px; height:10px; border-radius:50%; display:block; background:#2A3242; }
+  .term-bar .file{ margin-left:10px; font-size:12px; color:var(--ink-faint); }
+  .term-body{ padding:26px 24px 30px; font-size:13.6px; line-height:1.9; min-height:340px; }
+  .term-line{ display:flex; gap:10px; }
+  .term-line .prompt{ color:var(--indigo); flex-shrink:0; }
+  .term-line .out{ color:var(--ink-dim); }
+  .term-line .pkg{ color:var(--ink); }
+  .term-line .ver{ color:var(--cyan); }
+  .term-cursor{
+    display:inline-block; width:7px; height:14px; background:var(--cyan);
+    margin-left:4px; animation:caret 1s steps(1) infinite; vertical-align:-2px;
+  }
+  @keyframes caret{ 50%{ opacity:0; } }
+
+  /* ---------- contact console ---------- */
+  .console{
+    background:#080B12; border:1px solid var(--line-strong); border-radius:8px;
+    padding:0; overflow:hidden;
+  }
+  .console-bar{
+    display:flex; align-items:center; gap:8px; padding:12px 16px;
+    border-bottom:1px solid var(--line); background:#0C1018;
+    font-size:12px; color:var(--ink-faint);
+  }
+  .console-bar i{ width:10px; height:10px; border-radius:50%; background:#2A3242; }
+  .console-body{ padding:32px; }
+  @media (max-width:720px){ .console-body{ padding:22px; } }
+  .field{ margin-bottom:22px; }
+  .field label{
+    display:block; font-size:12.5px; color:var(--cyan); margin-bottom:8px;
+  }
+  .field label::before{ content:'$ '; color:var(--ink-faint); }
+  .field input, .field textarea{
+    width:100%; background:#0E141F; border:1px solid var(--line-strong);
+    border-radius:5px; padding:12px 14px; color:var(--ink);
+    font-family:'JetBrains Mono',monospace; font-size:13.5px;
+    outline:none; transition:border-color .2s ease;
+  }
+  .field input:focus, .field textarea:focus{ border-color:var(--cyan); }
+  .field textarea{ resize:vertical; min-height:100px; }
+  .console-submit{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  }
+  #console-result{ font-size:13px; color:var(--ok); min-height:20px; }
+  #console-result .line{ display:block; }
+
+  /* ---------- footer ---------- */
+  footer{ padding:50px 0 calc(50px + env(safe-area-inset-bottom, 0px)); border-top:1px solid var(--line); }
+  .foot-inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  .foot-inner .mono{ font-size:12.5px; color:var(--ink-faint); }
+  .foot-links{ display:flex; gap:22px; font-size:13px; }
+  .foot-links a{ text-decoration:none; color:var(--ink-dim); transition:color .2s ease; }
+  .foot-links a:hover{ color:var(--cyan); }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--cyan); outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-id mono"><span class="dot"></span>haris.dev</div>
+    <nav class="nav-links mono">
+      <a href="#capabilities">capabilities</a>
+      <a href="#projects">projects</a>
+      <a href="#stack">stack</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-ghost mono" style="padding:9px 16px; font-size:12.5px;">get in touch</a>
+  </div>
+</header>
+
+<main>
+  <section id="hero">
+    <div id="hero-canvas-wrap"><canvas id="hero-canvas"></canvas></div>
+    <div id="hero-fallback"></div>
+    <div class="wrap hero-inner">
+      <div class="hero-kicker mono">● available for select engagements</div>
+      <h1 class="hero-name">Muhammad<br>Haris O</h1>
+      <p class="hero-role">Software Developer <span class="mono">// 3D &amp; SaaS Modeling</span></p>
+      <p class="hero-desc">I design and build the structural layer beneath SaaS products — data models, interactive dashboards, and the occasional real-time 3D interface — so the systems underneath feel as considered as the screens on top.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View selected work</a>
+        <a href="#contact" class="btn btn-ghost mono">open_console()</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>7+</b><span class="mono">yrs building software</span></div>
+        <div class="hero-stat"><b>30+</b><span class="mono">saas systems shipped</span></div>
+        <div class="hero-stat"><b>3</b><span class="mono">production 3d engines</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="rule"></div></div>
+
+  <section id="capabilities">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="path mono">/core/capabilities</div>
+          <h2>Where I add the most leverage</h2>
+        </div>
+        <p>Three areas cover almost everything I'm hired to do — modeling the data, building the interface, and shipping the whole stack in between.</p>
+      </div>
+    </div>
+    <div class="wrap" style="padding:0;">
+      <div class="cap-grid">
+        <div class="cap-card">
+          <div class="cap-glow"></div>
+          <span class="idx mono">cap.01</span>
+          <h3>SaaS Architecture Modeling</h3>
+          <p>Entity relationships, tenancy boundaries, and permission graphs designed before a single table is migrated — built to survive the product's second and third year, not just its launch.</p>
+          <div class="tags mono"><span>schema design</span><span>multi-tenancy</span><span>PostgreSQL</span></div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-glow"></div>
+          <span class="idx mono">cap.02</span>
+          <h3>Interactive Dashboards</h3>
+          <p>Data-dense interfaces that stay legible under real usage — live metrics, drill-downs, and state that updates without losing the user's place on the screen.</p>
+          <div class="tags mono"><span>React</span><span>D3 / WebGL</span><span>real-time sync</span></div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-glow"></div>
+          <span class="idx mono">cap.03</span>
+          <h3>Full-Stack Development</h3>
+          <p>API to interface, one owner end to end — so the contract between backend and frontend stays honest and nothing gets lost in the handoff.</p>
+          <div class="tags mono"><span>Node.js</span><span>TypeScript</span><span>cloud infra</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="path mono">/selected/projects</div>
+          <h2>Selected builds</h2>
+        </div>
+        <p>A short list of SaaS systems and interfaces I've taken from model to production.</p>
+      </div>
+      <div class="proj-list" id="proj-list">
+        <div class="proj-card proj-glitch">
+          <div class="proj-id mono">proj.01</div>
+          <div class="proj-main">
+            <h3>Ledgerline — Multi-Tenant Billing Engine</h3>
+            <p>Usage-based billing core for a B2B analytics platform, modeling metered plans and proration across thousands of tenants without a reconciliation job in sight.</p>
+            <div class="stack mono"><span>Node.js</span><span>PostgreSQL</span><span>Stripe API</span></div>
+          </div>
+          <div class="proj-status mono">shipped · prod</div>
+        </div>
+        <div class="proj-card proj-glitch">
+          <div class="proj-id mono">proj.02</div>
+          <div class="proj-main">
+            <h3>Orbitboard — Live Ops Dashboard</h3>
+            <p>Real-time operations console for a logistics SaaS, rendering thousands of moving assets on a WebGL map layer at a steady frame rate.</p>
+            <div class="stack mono"><span>React</span><span>Three.js</span><span>WebSockets</span></div>
+          </div>
+          <div class="proj-status mono">shipped · prod</div>
+        </div>
+        <div class="proj-card proj-glitch">
+          <div class="proj-id mono">proj.03</div>
+          <div class="proj-main">
+            <h3>Meshframe — 3D Config Studio</h3>
+            <p>In-browser product configurator letting customers assemble and preview modular hardware in real time before checkout, with generated pricing per configuration.</p>
+            <div class="stack mono"><span>Three.js</span><span>WebGL</span><span>GraphQL</span></div>
+          </div>
+          <div class="proj-status mono">shipped · prod</div>
+        </div>
+        <div class="proj-card proj-glitch">
+          <div class="proj-id mono">proj.04</div>
+          <div class="proj-main">
+            <h3>Fieldmodel — Schema Design Toolkit</h3>
+            <p>Internal tool for SaaS teams to visually model entity relationships and export directly to versioned migrations, cutting schema review time considerably.</p>
+            <div class="stack mono"><span>TypeScript</span><span>D3.js</span><span>Prisma</span></div>
+          </div>
+          <div class="proj-status mono">in development</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="path mono">/tech/stack</div>
+          <h2>Tools I reach for</h2>
+        </div>
+        <p>The core toolkit behind most of the work above — installed, versioned, and actually used in production.</p>
+      </div>
+      <div class="term">
+        <div class="term-bar">
+          <i style="background:#EF4444;"></i><i style="background:#F5A623;"></i><i style="background:#34D399;"></i>
+          <span class="file mono">~/haris/stack — zsh</span>
+        </div>
+        <div class="term-body mono" id="term-body"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="path mono">/contact</div>
+          <h2>Start a conversation</h2>
+        </div>
+        <p>Send a brief and I'll reply with next steps — usually within a day or two.</p>
+      </div>
+      <div class="console">
+        <div class="console-bar">
+          <i></i><i></i><i></i>
+          <span class="mono" style="margin-left:8px;">contact — console</span>
+        </div>
+        <div class="console-body">
+          <form id="contact-form">
+            <div class="field">
+              <label for="c-name">name</label>
+              <input id="c-name" name="name" type="text" placeholder="Jordan Lee" required>
+            </div>
+            <div class="field">
+              <label for="c-email">email</label>
+              <input id="c-email" name="email" type="email" placeholder="jordan@company.com" required>
+            </div>
+            <div class="field">
+              <label for="c-msg">message</label>
+              <textarea id="c-msg" name="message" placeholder="Tell me about the project…" required></textarea>
+            </div>
+            <div class="console-submit">
+              <button type="submit" class="btn btn-primary mono">send_message()</button>
+              <div id="console-result" class="mono" aria-live="polite"></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span class="mono">© 2026 Muhammad Haris O — built from scratch, rendered in-browser.</span>
+    <div class="foot-links mono">
+      <a href="#hero">top</a>
+      <a href="#projects">work</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     TECH STACK TERMINAL — typed line-by-line list
+  ============================================================ */
+  (function terminal(){
+    var body = document.getElementById('term-body');
+    var lines = [
+      {cmd:"ls -la ./stack/languages"},
+      {out:"JavaScript / TypeScript   Python   GLSL"},
+      {cmd:"ls -la ./stack/frontend"},
+      {out:"React   Three.js   D3.js   Tailwind"},
+      {cmd:"ls -la ./stack/backend"},
+      {out:"Node.js   GraphQL   PostgreSQL   Redis"},
+      {cmd:"ls -la ./stack/infra"},
+      {out:"Docker   AWS   Vercel   GitHub Actions"},
+      {cmd:"echo $STATUS"},
+      {out:"ready for next engagement", ok:true}
+    ];
+    var i = 0;
+    function typeLine(){
+      if(i >= lines.length){
+        var cur = document.createElement('div');
+        cur.className = 'term-line';
+        cur.innerHTML = '<span class="prompt">❯</span><span class="term-cursor"></span>';
+        body.appendChild(cur);
+        return;
+      }
+      var l = lines[i];
+      var row = document.createElement('div');
+      row.className = 'term-line';
+      if(l.cmd){
+        row.innerHTML = '<span class="prompt">❯</span><span class="pkg"></span>';
+        body.appendChild(row);
+        var target = row.querySelector('.pkg');
+        var text = l.cmd, ci = 0;
+        var t = setInterval(function(){
+          target.textContent += text[ci];
+          ci++;
+          if(ci >= text.length){ clearInterval(t); i++; setTimeout(typeLine, 120); }
+        }, 18);
+      } else {
+        row.innerHTML = '<span class="prompt" style="opacity:0;">❯</span><span class="out"' + (l.ok ? ' style="color:var(--ok);"' : '') + '>' + l.out + '</span>';
+        body.appendChild(row);
+        i++;
+        setTimeout(typeLine, 220);
+      }
+    }
+    var started = false;
+    function maybeStart(){
+      if(started) return;
+      var rect = document.getElementById('term-body').getBoundingClientRect();
+      if(rect.top < window.innerHeight * 0.85){
+        started = true;
+        typeLine();
+        window.removeEventListener('scroll', maybeStart);
+      }
+    }
+    window.addEventListener('scroll', maybeStart, {passive:true});
+    maybeStart();
+  })();
+
+  /* ============================================================
+     PROJECT CARDS — 3D tilt + micro-glitch on hover
+  ============================================================ */
+  (function projectCards(){
+    var cards = document.querySelectorAll('.proj-card');
+    cards.forEach(function(card){
+      var h3 = card.querySelector('h3');
+      card.addEventListener('mouseenter', function(){
+        card.classList.add('glitching');
+        setTimeout(function(){ card.classList.remove('glitching'); }, 320);
+      });
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        if(window.gsap){
+          gsap.to(h3, { x: px * 6, y: py * 4, duration: 0.4, ease:'power2.out' });
+        }
+      });
+      card.addEventListener('mouseleave', function(){
+        if(window.gsap){ gsap.to(h3, { x:0, y:0, duration:0.5, ease:'power2.out' }); }
+      });
+    });
+  })();
+
+  /* ============================================================
+     CONTACT CONSOLE — simulated terminal submit
+  ============================================================ */
+  (function contactConsole(){
+    var form = document.getElementById('contact-form');
+    var result = document.getElementById('console-result');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var name = document.getElementById('c-name').value.trim() || 'anonymous';
+      result.innerHTML =
+        '<span class="line">❯ sending message…</span>' +
+        '<span class="line">✓ message queued for delivery</span>' +
+        '<span class="line">✓ thanks, ' + name.split(' ')[0].replace(/[<>]/g,'') + ' — I\'ll reply by email shortly.</span>';
+      form.reset();
+    });
+  })();
+
+  /* ============================================================
+     THREE.JS HERO — glowing SaaS data-structure node graph
+  ============================================================ */
+  (function heroScene(){
+    var canvas = document.getElementById('hero-canvas');
+    var fallback = document.getElementById('hero-fallback');
+    var heroSection = document.getElementById('hero');
+
+    var supportsWebGL = (function(){
+      try{
+        var c = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')));
+      }catch(e){ return false; }
+    })();
+
+    if(!supportsWebGL || typeof THREE === 'undefined'){
+      canvas.style.display = 'none';
+      fallback.style.display = 'block';
+      return;
+    }
+
+    var renderer, scene, camera, group, rafId;
+    var mouseX = 0, mouseY = 0, targetRotX = 0, targetRotY = 0;
+    var scrollFactor = 0;
+    var width, height;
+
+    function init(){
+      scene = new THREE.Scene();
+
+      width = heroSection.clientWidth;
+      height = heroSection.clientHeight;
+
+      camera = new THREE.PerspectiveCamera(48, width / height, 0.1, 100);
+      camera.position.set(0, 0, 13);
+
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias:true, alpha:true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(width, height);
+      renderer.setClearColor(0x000000, 0);
+
+      group = new THREE.Group();
+      group.position.set(2.4, 0, 0);
+      scene.add(group);
+
+      buildDataStructure();
+      buildAmbientParticles();
+
+      window.addEventListener('resize', onResize);
+      canvas.addEventListener('pointermove', onPointerMove, {passive:true});
+      window.addEventListener('scroll', onScroll, {passive:true});
+
+      if(window.gsap && window.ScrollTrigger){
+        gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.create({
+          trigger: heroSection,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+          onUpdate: function(self){ scrollFactor = self.progress; }
+        });
+      }
+
+      animate();
+    }
+
+    /* Core wireframe "SaaS database cube" made of nested node-graph geometry */
+    function buildDataStructure(){
+      var cyan = new THREE.Color(0x06B6D4);
+      var indigo = new THREE.Color(0x6366F1);
+
+      // Outer wireframe cube (the "database" boundary)
+      var boxGeo = new THREE.BoxGeometry(4.4, 4.4, 4.4, 3, 3, 3);
+      var edges = new THREE.EdgesGeometry(boxGeo);
+      var outerMat = new THREE.LineBasicMaterial({ color: 0x6366F1, transparent:true, opacity:0.35 });
+      var outerCube = new THREE.LineSegments(edges, outerMat);
+      group.add(outerCube);
+
+      // Inner rotated cube (logic layer)
+      var innerGeo = new THREE.BoxGeometry(2.5, 2.5, 2.5);
+      var innerEdges = new THREE.EdgesGeometry(innerGeo);
+      var innerMat = new THREE.LineBasicMaterial({ color: 0x06B6D4, transparent:true, opacity:0.55 });
+      var innerCube = new THREE.LineSegments(innerEdges, innerMat);
+      innerCube.rotation.set(0.4, 0.4, 0);
+      group.add(innerCube);
+      group.userData.innerCube = innerCube;
+      group.userData.outerCube = outerCube;
+
+      // Node points scattered on/near the cube's structure, connected as a graph
+      var nodeCount = 42;
+      var positions = [];
+      var pts = [];
+      for(var i = 0; i < nodeCount; i++){
+        var v = new THREE.Vector3(
+          (Math.random() - 0.5) * 5.4,
+          (Math.random() - 0.5) * 5.4,
+          (Math.random() - 0.5) * 5.4
+        );
+        pts.push(v);
+        positions.push(v.x, v.y, v.z);
+      }
+
+      var nodeGeo = new THREE.BufferGeometry();
+      nodeGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+      var nodeMat = new THREE.PointsMaterial({
+        color: 0x22D3EE, size: 0.085, transparent:true, opacity:0.9,
+        blending: THREE.AdditiveBlending, depthWrite:false
+      });
+      var points = new THREE.Points(nodeGeo, nodeMat);
+      group.add(points);
+
+      // Connect nearby nodes to form a graph lattice (limited pairs for perf)
+      var linePositions = [];
+      var maxDist = 2.1;
+      var maxLinks = 90;
+      var links = 0;
+      for(var a = 0; a < pts.length && links < maxLinks; a++){
+        for(var b = a + 1; b < pts.length && links < maxLinks; b++){
+          if(pts[a].distanceTo(pts[b]) < maxDist){
+            linePositions.push(pts[a].x, pts[a].y, pts[a].z, pts[b].x, pts[b].y, pts[b].z);
+            links++;
+          }
+        }
+      }
+      var lineGeo = new THREE.BufferGeometry();
+      lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+      var lineMat = new THREE.LineBasicMaterial({ color:0x6366F1, transparent:true, opacity:0.18 });
+      var lattice = new THREE.LineSegments(lineGeo, lineMat);
+      group.add(lattice);
+
+      group.userData.points = points;
+      group.userData.pointsBasePositions = positions.slice();
+    }
+
+    function buildAmbientParticles(){
+      var count = 160;
+      var positions = [];
+      for(var i = 0; i < count; i++){
+        positions.push(
+          (Math.random() - 0.5) * 22,
+          (Math.random() - 0.5) * 14,
+          (Math.random() - 0.5) * 10 - 4
+        );
+      }
+      var geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+      var mat = new THREE.PointsMaterial({
+        color: 0x475569, size: 0.035, transparent:true, opacity:0.5,
+        blending: THREE.AdditiveBlending, depthWrite:false
+      });
+      var field = new THREE.Points(geo, mat);
+      scene.add(field);
+      scene.userData.field = field;
+    }
+
+    function onResize(){
+      width = heroSection.clientWidth;
+      height = heroSection.clientHeight;
+      if(width === 0 || height === 0) return;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+
+    function onPointerMove(e){
+      var r = canvas.getBoundingClientRect();
+      mouseX = ((e.clientX - r.left) / r.width) * 2 - 1;
+      mouseY = ((e.clientY - r.top) / r.height) * 2 - 1;
+    }
+
+    function onScroll(){ /* handled via ScrollTrigger when available; noop fallback */ }
+
+    var clock = new THREE.Clock();
+
+    function animate(){
+      rafId = requestAnimationFrame(animate);
+      var dt = clock.getDelta();
+      var t = clock.getElapsedTime();
+
+      // inertia-based mouse tracking
+      targetRotX += (mouseY * 0.35 - targetRotX) * 0.045;
+      targetRotY += (mouseX * 0.5 - targetRotY) * 0.045;
+
+      group.rotation.x = targetRotX + Math.sin(t * 0.12) * 0.05;
+      group.rotation.y = targetRotY + t * 0.06;
+
+      if(group.userData.innerCube){
+        group.userData.innerCube.rotation.x -= dt * 0.15;
+        group.userData.innerCube.rotation.y += dt * 0.2;
+      }
+      if(group.userData.outerCube){
+        group.userData.outerCube.rotation.y -= dt * 0.04;
+      }
+
+      // scroll-driven scale/position
+      var sf = scrollFactor;
+      group.scale.setScalar(1 - sf * 0.35);
+      group.position.x = 2.4 + sf * 1.8;
+      group.position.y = -sf * 1.2;
+
+      if(scene.userData.field){
+        scene.userData.field.rotation.y = t * 0.01;
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    // Pause render loop when hero is off-screen (perf)
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            if(!rafId) animate();
+          } else {
+            if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
+          }
+        });
+      }, { threshold: 0.01 });
+      io.observe(heroSection);
+    }
+
+    try{
+      init();
+    }catch(err){
+      canvas.style.display = 'none';
+      fallback.style.display = 'block';
+    }
+  })();
+
+})();
+</script>
+</body>
+</html>
