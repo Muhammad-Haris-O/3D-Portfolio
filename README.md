@@ -1,4 +1,4 @@
-# Muhammad Haris O — Portfolio
+# AI Assistants Web
 
 A single-file, self-contained 3D developer portfolio built with Three.js and GSAP.
 
@@ -24,4 +24,4 @@ No build tools required — it's a single HTML file.
 Works on any static host (GitHub Pages, Netlify, Vercel) since it has no server-side dependencies.
 
 ## License
-© 2026 Muhammad Haris O. All rights reserved.# 3D-Portfolio
+© 2026 Muhammad Haris O. All rights reserved.# Animation
